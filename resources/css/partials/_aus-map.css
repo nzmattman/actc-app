@@ -1,0 +1,26 @@
+.aus--highlight {
+  &-sa .aus--sa {
+    color: var(--gold);
+  }
+  &-nt .aus--nt {
+    color: var(--gold);
+  }
+  &-wa .aus--wa {
+    color: var(--gold);
+  }
+  &-tas .aus--tas {
+    color: var(--gold);
+  }
+  &-qld .aus--qld {
+    color: var(--gold);
+  }
+  &-nsw .aus--nsw {
+    color: var(--gold);
+  }
+  &-act .aus--act {
+    color: var(--gold);
+  }
+  &-vic .aus--vic {
+    color: var(--gold);
+  }
+}

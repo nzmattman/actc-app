@@ -1,0 +1,13 @@
+.block__content {
+  padding: var(--block-padding);
+  background-color: var(--black-500);
+  border-radius: var(--radius);
+
+  &--thin {
+    padding-inline: 5px;
+  }
+
+  &--no-padding {
+    padding: 0;
+  }
+}

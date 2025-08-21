@@ -1,0 +1,52 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "vite build",
+        "build:ssr": "vite build && vite build --ssr",
+        "dev": "vite",
+        "format": "prettier --write resources/",
+        "format:check": "prettier --check resources/",
+        "lint": "eslint . --fix"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.19.0",
+        "@types/node": "^22.13.5",
+        "@vue/eslint-config-prettier": "^10.2.0",
+        "@vue/eslint-config-typescript": "^14.6.0",
+        "autoprefixer": "^10.4.21",
+        "eslint": "^9.33.0",
+        "eslint-config-prettier": "^10.1.8",
+        "eslint-plugin-vue": "^9.33.0",
+        "postcss": "^8.5.6",
+        "postcss-discard-comments": "^7.0.4",
+        "postcss-nested": "^7.0.2",
+        "prettier": "^3.6.2",
+        "prettier-plugin-organize-imports": "^4.2.0",
+        "typescript-eslint": "^8.23.0",
+        "vite-svg-loader": "^5.1.0",
+        "vue-tsc": "^2.2.12"
+    },
+    "dependencies": {
+        "@formkit/inertia": "^0.1.5",
+        "@formkit/vue": "^1.6.9",
+        "@googlemaps/js-api-loader": "^1.16.10",
+        "@inertiajs/vue3": "^2.0.0",
+        "@vitejs/plugin-vue": "^6.0.0",
+        "@vueuse/core": "^12.8.2",
+        "class-variance-authority": "^0.7.1",
+        "clsx": "^2.1.1",
+        "concurrently": "^9.0.1",
+        "laravel-vite-plugin": "^2.0.0",
+        "lucide-vue-next": "^0.468.0",
+        "reka-ui": "^2.2.0",
+        "typescript": "^5.2.2",
+        "vite": "^7.0.4",
+        "vue": "^3.5.13",
+        "ziggy-js": "^2.4.2"
+    },
+    "optionalDependencies": {
+        "@rollup/rollup-linux-x64-gnu": "4.9.5",
+        "lightningcss-linux-x64-gnu": "^1.29.1"
+    }
+}

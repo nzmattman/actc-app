@@ -1,0 +1,98 @@
+.formkit {
+  &-label {
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: block;
+  }
+
+  &-input {
+    width: 100%;
+    border: 0;
+    border-radius: 5px;
+    padding: 8px 15px;
+    color: var(--black);
+
+    &:focus-visible {
+      outline-color: var(--gold);
+    }
+  }
+
+  &-messages {
+    margin: 5px 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.9rem;
+  }
+
+  &-outer {
+    margin-bottom: 1.5rem;
+  }
+
+  &-inner {
+    position: relative;
+  }
+
+  &-suffix-icon {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+  }
+
+  &-icon {
+    color: var(--gold);
+    cursor: pointer;
+  }
+
+  &-icon svg {
+    height: 20px;
+  }
+
+  &-outer[data-type='checkbox'] {
+    .formkit-wrapper {
+      display: flex;
+      gap: 1rem;
+    }
+    .formkit-input {
+      width: 0;
+      height: 0;
+      position: absolute;
+      overflow: hidden;
+      opacity: 0;
+    }
+
+    .formkit-decorator {
+      display: flex;
+      width: 1.25rem;
+      height: 1.25rem;
+      border: 1px solid var(--gold);
+    }
+
+    .formkit-decorator-icon {
+      margin: auto;
+      line-height: 1;
+      display: block;
+      opacity: 0;
+      transition: opacity 100ms linear;
+      svg {
+        height: 15px;
+      }
+    }
+
+    .formkit-input:checked + .formkit-decorator {
+      background-color: var(--gold);
+      .formkit-decorator-icon {
+        color: var(--white);
+        opacity: 1;
+      }
+    }
+  }
+
+  &-messages {
+    color: var(--red);
+  }
+
+  &-form > .formkit-messages {
+    display: none;
+  }
+}

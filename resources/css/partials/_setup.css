@@ -1,0 +1,50 @@
+html,
+body {
+  overflow: hidden;
+}
+
+a {
+  &:hover {
+    opacity: var(--opacity);
+  }
+}
+
+a,
+.button {
+  transition:
+    color var(--transition),
+    opacity var(--transition);
+}
+
+.holder {
+  color: var(--text-color);
+  margin-inline: auto;
+  width: min(var(--holder-width), 100% - 4rem);
+
+  &--small {
+    --holder-width: 600px;
+  }
+}
+
+h1 {
+  font-size: 6rem;
+}
+h2 {
+  font-size: 5rem;
+}
+h3 {
+  font-size: 4rem;
+}
+h4 {
+  font-size: 3rem;
+}
+h5 {
+  font-size: 2rem;
+}
+h6 {
+  font-size: 1rem;
+}
+
+a.inline {
+  display: inline-block;
+}
