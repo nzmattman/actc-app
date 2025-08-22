@@ -6,9 +6,8 @@
         <ListItem title="Edit Profile" :route="route('profile.edit')" />
         <ListItem
           title="Update Password"
-          :route="route('profile.update-password')"
+          :route="route('profile.password.edit')"
         />
-        <ListItem title="Delete Account" :route="route('profile.delete')" />
         <ListItem title="Logout" :route="route('logout')" />
       </List>
     </BlockContent>

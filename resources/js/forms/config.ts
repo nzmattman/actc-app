@@ -1,4 +1,4 @@
-import { createErrorHandlerPlugin } from '@forms/plugins';
+import { createErrorHandlerPlugin, createRequiredPlugin } from '@forms/plugins';
 import {
   PasswordMessage,
   PasswordRule,
@@ -21,7 +21,7 @@ export default {
     debug: import.meta.env.VITE_DEBUG === 'true',
   },
 
-  plugins: [createErrorHandlerPlugin()],
+  plugins: [createErrorHandlerPlugin(), createRequiredPlugin()],
 
   rules: {
     password: PasswordRule,

@@ -95,4 +95,18 @@
   &-form > .formkit-messages {
     display: none;
   }
+
+  &-select-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    translate: 0 -50%;
+    line-height: 0;
+    margin-top: -2px;
+  }
+}
+
+select.formkit-input {
+  appearance: none;
+  padding-right: 35px;
 }

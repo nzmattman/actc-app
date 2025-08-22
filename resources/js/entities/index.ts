@@ -1,3 +1,4 @@
+export * from './address';
 export * from './app';
 export * from './clubs';
 export * from './form';

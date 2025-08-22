@@ -86,10 +86,11 @@ const submitHandler = async (formData: any, node: FormKitNode | undefined) => {
   }
 
   try {
-    form.put(route('password.update'))(formData, node);
+    form.put(route('profile.password.update'))(formData, node);
     form.addon((on) => {
       on('finish', () => {
         isLoading.value = false;
+        node.reset();
       });
     });
   } catch (error) {

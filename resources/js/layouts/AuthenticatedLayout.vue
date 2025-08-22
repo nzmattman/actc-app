@@ -22,7 +22,7 @@
             <IconBell />
             <NotificationDot />
           </Link>
-          <Link :href="route('password.confirm')">
+          <Link :href="route('profile.index')">
             <IconUser />
           </Link>
         </nav>

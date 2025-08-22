@@ -8,7 +8,7 @@ use ACTC\Clubs\Providers\ClubServiceProvider;
 use ACTC\Core\Aggregates\RouteAggregate;
 use ACTC\Core\Commands\CreateModule;
 use ACTC\Dashboard\Providers\DashboardServiceProvider;
-use ACTC\Profile\Providers\ProfileServiceProvider;
+use ACTC\Users\Providers\UserServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
 class CoreServiceProvider extends ServiceProvider
@@ -16,7 +16,7 @@ class CoreServiceProvider extends ServiceProvider
     public function register(): void
     {
         // register the service providers
-		$this->app->register(ProfileServiceProvider::class);
+		$this->app->register(UserServiceProvider::class);
         $this->app->register(DashboardServiceProvider::class);
         $this->app->register(ClubServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);

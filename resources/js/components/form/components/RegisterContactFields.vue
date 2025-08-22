@@ -26,8 +26,7 @@
 
 <script setup lang="ts">
 import InputStandard from '@/components/form/InputStandard.vue';
-import { InputType } from '@/entities';
-import { User } from '@/types';
+import { InputType, User } from '@/entities';
 
 interface Props {
   user?: User;

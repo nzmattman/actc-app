@@ -44,7 +44,7 @@
         Forgot Password?
       </Link>
 
-      <Link class="link" :href="route('register')"> Register </Link>
+      <Link class="link" :href="route('register.step-one')"> Register </Link>
     </footer>
   </FormKit>
 </template>

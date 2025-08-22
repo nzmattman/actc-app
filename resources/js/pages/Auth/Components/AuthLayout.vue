@@ -41,4 +41,12 @@ const slots = defineSlots();
   justify-content: space-between;
   flex-direction: row;
 }
+
+.steps {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+}
+
+.steps aside {
+}
 </style>

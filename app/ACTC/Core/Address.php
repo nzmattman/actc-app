@@ -11,6 +11,41 @@ use Filament\Schemas\Components\Section;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property string $uuid
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property int|null $state_id
+ * @property string $street_address
+ * @property string|null $street_address_2
+ * @property string|null $suburb
+ * @property string|null $city
+ * @property string|null $state_other
+ * @property string|null $country
+ * @property string|null $postcode
+ * @property-read mixed $full_address
+ * @property-read \ACTC\Core\State|null $state
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Address newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Address newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Address query()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Address uuid(string $uuid)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Address whereCity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Address whereCountry($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Address whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Address whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Address whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Address wherePostcode($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Address whereStateId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Address whereStateOther($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Address whereStreetAddress($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Address whereStreetAddress2($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Address whereSuburb($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Address whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Address whereUuid($value)
+ * @mixin \Eloquent
+ */
 class Address extends Model
 {
     use HasUuid;

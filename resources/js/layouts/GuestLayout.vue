@@ -85,7 +85,7 @@ const classList = computed(() => {
 .guestLayout footer {
   display: flex;
   flex-direction: column;
-  gap: 4rem;
+  gap: 2rem;
 }
 
 .guestLayout footer {

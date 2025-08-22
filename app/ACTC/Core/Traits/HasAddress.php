@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ACTC\Core\Traits;
 
 use ACTC\Core\Address;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 trait HasAddress
 {
@@ -66,5 +67,10 @@ trait HasAddress
         unset($data['address']);
 
         return $data;
+    }
+
+    public function address(): BelongsTo
+    {
+        return $this->belongsTo(Address::class);
     }
 }

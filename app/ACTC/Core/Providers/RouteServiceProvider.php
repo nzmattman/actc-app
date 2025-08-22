@@ -25,7 +25,7 @@ class RouteServiceProvider extends ServiceProvider
 
     public function mapAdminRoutes(): void
     {
-        Route::middleware(['web', 'auth', 'verified'])
+        Route::middleware(['web', 'auth', 'onboarded', 'verified'])
             ->group(function () {
                 $routeAggregate = app(RouteAggregate::class);
 
