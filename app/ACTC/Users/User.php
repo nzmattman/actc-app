@@ -8,14 +8,17 @@ use ACTC\Core\Address;
 use ACTC\Core\States\Status\StatusState;
 use ACTC\Core\Traits\HasAddress;
 use ACTC\Core\Traits\HasUuid;
+use ACTC\Users\Observers\UserObserver;
 use ACTC\Users\States\OnboardingStatus\OnboardingStatusState;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
+use Laravel\Cashier\Billable;
 use Spatie\ModelStates\HasStates;
 use Spatie\ModelStates\HasStatesContract;
 
@@ -68,8 +71,10 @@ use Spatie\ModelStates\HasStatesContract;
  *
  * @mixin \Eloquent
  */
+#[ObservedBy([UserObserver::class])]
 class User extends Authenticatable implements HasStatesContract, MustVerifyEmail
 {
+    use Billable;
     use HasAddress;
     use HasStates;
     use HasUuid;
@@ -102,6 +107,27 @@ class User extends Authenticatable implements HasStatesContract, MustVerifyEmail
         'remember_token',
     ];
 
+    protected $appends = [
+        'name',
+    ];
+
+    public function stripeName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function stripeAddress(): array
+    {
+        return [
+            'city' => $this->address?->city,
+            'country' => 'AU',
+            'line1' => $this->address?->street_address,
+            'line2' => $this->address?->street_address_2,
+            'postal_code' => $this->address?->postcode,
+            'state' => $this->address?->state->name,
+        ];
+    }
+
     /**
      * Get the attributes that should be cast.
      *
@@ -115,5 +141,10 @@ class User extends Authenticatable implements HasStatesContract, MustVerifyEmail
             'status' => StatusState::class,
             'onboarding_status' => OnboardingStatusState::class,
         ];
+    }
+
+    protected function getNameAttribute(): string
+    {
+        return $this->first_name.' '.$this->last_name;
     }
 }

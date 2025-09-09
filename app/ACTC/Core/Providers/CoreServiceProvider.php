@@ -9,14 +9,21 @@ use ACTC\Core\Aggregates\RouteAggregate;
 use ACTC\Core\Commands\CreateModule;
 use ACTC\Dashboard\Providers\DashboardServiceProvider;
 use ACTC\Users\Providers\UserServiceProvider;
+use ACTC\Users\User;
+use ACTC\Discounts\Providers\DiscountServiceProvider;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Cashier\Cashier;
 
 class CoreServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        Cashier::useCustomerModel(User::class);
+        Cashier::calculateTaxes();
+
         // register the service providers
-		$this->app->register(UserServiceProvider::class);
+		$this->app->register(DiscountServiceProvider::class);
+        $this->app->register(UserServiceProvider::class);
         $this->app->register(DashboardServiceProvider::class);
         $this->app->register(ClubServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);

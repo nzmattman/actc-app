@@ -12,6 +12,7 @@
     border-radius: 5px;
     padding: 8px 15px;
     color: var(--black);
+    background-color: var(--white);
 
     &:focus-visible {
       outline-color: var(--gold);

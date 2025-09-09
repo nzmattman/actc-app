@@ -10,23 +10,25 @@ use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
- * @property int $id
- * @property string $uuid
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property string|null $deleted_at
- * @property int|null $state_id
- * @property string $street_address
- * @property string|null $street_address_2
- * @property string|null $suburb
- * @property string|null $city
- * @property string|null $state_other
- * @property string|null $country
- * @property string|null $postcode
- * @property-read mixed $full_address
- * @property-read \ACTC\Core\State|null $state
+ * @property int         $id
+ * @property string      $uuid
+ * @property null|Carbon $created_at
+ * @property null|Carbon $updated_at
+ * @property null|string $deleted_at
+ * @property null|int    $state_id
+ * @property string      $street_address
+ * @property null|string $street_address_2
+ * @property null|string $suburb
+ * @property null|string $city
+ * @property null|string $state_other
+ * @property null|string $country
+ * @property null|string $postcode
+ * @property mixed       $full_address
+ * @property null|State  $state
+ *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Address newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Address newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Address query()
@@ -44,6 +46,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Address whereSuburb($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Address whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Address whereUuid($value)
+ *
  * @mixin \Eloquent
  */
 class Address extends Model
@@ -60,6 +63,10 @@ class Address extends Model
         'state_other',
         'country',
         'postcode',
+    ];
+
+    protected $attributes = [
+        'country' => 'AUS',
     ];
 
     protected $appends = [

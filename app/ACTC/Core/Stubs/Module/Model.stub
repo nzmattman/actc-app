@@ -5,15 +5,21 @@ declare(strict_types=1);
 namespace ACTC\[Module];
 
 use ACTC\Core\Traits\HasUuid;
+use ACTC\Core\Traits\HasActive;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\EloquentSortable\SortableTrait;
 
 class [ModuleSingle] extends Model
 {
     use HasUuid;
+    use HasActive;
     use SoftDeletes;
+    use SortableTrait;
 
     protected $fillable = [
         'uuid',
+        'active',
+        'position',
     ];
 }

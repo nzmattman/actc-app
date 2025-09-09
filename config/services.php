@@ -39,4 +39,10 @@ return [
     'google' => [
         'api_key' => ENV('GOOGLE_API_KEY'),
     ],
+
+    'stripe' => [
+        'subscription' => [
+            'id' => env('STRIPE_SUBSCRIPTION_ID'),
+        ]
+    ]
 ];

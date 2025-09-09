@@ -22,7 +22,12 @@
         <ButtonStandard :href="route('login')" useLink showArrow>
           Login
         </ButtonStandard>
-        <ButtonStandard :href="route('register')" useLink ghost showArrow>
+        <ButtonStandard
+          :href="route('register.step-one')"
+          useLink
+          ghost
+          showArrow
+        >
           Sign Up
         </ButtonStandard>
       </footer>

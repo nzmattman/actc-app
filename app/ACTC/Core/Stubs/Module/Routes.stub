@@ -4,6 +4,6 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('[ModuleSingleKebab]')->group(function () {
+Route::prefix('[ModuleSingleKebab]')->name('[ModuleSingleKebab].')->group(function () {
 
 });

@@ -15,7 +15,7 @@ Route::prefix('register')
     ->name('register.')
     ->group(function () {
         Route::get('/', Step01::class)->name('step-one');
-        Route::post('/', Step01Save::class)->name('step-one-save');
+        Route::post('/', Step01Save::class)->name('step-one.save');
     })
 ;
 
@@ -24,8 +24,8 @@ Route::prefix('register')
     ->middleware(['auth:web'])
     ->group(function () {
         Route::get('/address-details', Step02::class)->name('step-two');
-        Route::post('/address-details', Step02Save::class)->name('step-two-save');
+        Route::post('/address-details', Step02Save::class)->name('step-two.save');
         Route::get('/payment-details', Step03::class)->name('step-three');
-        Route::post('/payment-details', Step03Save::class)->name('step-three-save');
+        Route::post('/payment-details', Step03Save::class)->name('step-three.save');
     })
 ;

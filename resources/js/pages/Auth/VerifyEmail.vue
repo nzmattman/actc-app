@@ -8,32 +8,35 @@
         didn't receive the email, we will gladly send you another.
       </template>
 
-      <FormKit
-        type="form"
-        :actions="false"
-        @submit="submitHandler"
-        :incomplete-message="false"
-      >
-        <div class="formkit-outer">
-          <ButtonStandard
-            :size="Size.FULL"
-            :loading="isLoading"
-            :disabled="isLoading"
-            type="submit"
-          >
-            Resend Verification Email
-          </ButtonStandard>
-        </div>
+      <BlackBlock>
+        <FormKit
+          type="form"
+          :actions="false"
+          @submit="submitHandler"
+          :incomplete-message="false"
+        >
+          <div class="formkit-outer">
+            <ButtonStandard
+              :size="Size.FULL"
+              :loading="isLoading"
+              :disabled="isLoading"
+              type="submit"
+            >
+              Resend Verification Email
+            </ButtonStandard>
+          </div>
 
-        <div class="text--center">
-          <Link :href="route('logout')" class="link"> Logout </Link>
-        </div>
-      </FormKit>
+          <div class="text--center">
+            <Link :href="route('logout')" class="link"> Logout </Link>
+          </div>
+        </FormKit>
+      </BlackBlock>
     </AuthLayout>
   </GuestLayout>
 </template>
 
 <script setup lang="ts">
+import BlackBlock from '@/components/ui/Blocks/BlackBlock.vue';
 import { Size } from '@/entities';
 import GuestLayout from '@/layouts/GuestLayout.vue';
 import AuthLayout from '@/pages/Auth/Components/AuthLayout.vue';

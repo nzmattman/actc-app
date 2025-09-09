@@ -166,7 +166,7 @@ const classList = computed(() => {
   justify-content: center;
 }
 .button--loading svg {
-  width: 20px;
+  width: 16px;
 }
 
 .button--full {
@@ -175,5 +175,13 @@ const classList = computed(() => {
 
 .button--small {
   padding: 0.75rem 0.5rem;
+}
+
+.button--disabled {
+  cursor: default;
+  pointer-events: none;
+  background-color:var(--grey);
+  border-color: var(--grey);
+  opacity: var(--opacity);
 }
 </style>

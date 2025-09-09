@@ -16,25 +16,34 @@
         @submit="submitHandler"
         :incomplete-message="false"
       >
-        <AddressFields :states="states" />
+        <div class="space-y-2">
+          <BlackBlock>
+            <AddressFields :states="states" />
+          </BlackBlock>
 
-        <div class="formkit-outer">
-          <ButtonStandard
-            :size="Size.FULL"
-            :loading="isLoading"
-            :disabled="isLoading"
-            type="submit"
-          >
-            Next
-          </ButtonStandard>
+          <div class="formkit-outer">
+            <ButtonStandard
+              :size="Size.FULL"
+              :loading="isLoading"
+              :disabled="isLoading"
+              type="submit"
+            >
+              Next
+            </ButtonStandard>
+          </div>
         </div>
       </FormKit>
+
+      <div class="text--center">
+        <Link :href="route('auth.logout')">Logout</Link>
+      </div>
     </AuthLayout>
   </GuestLayout>
 </template>
 
 <script setup lang="ts">
 import AddressFields from '@/components/form/components/AddressFields.vue';
+import BlackBlock from '@/components/ui/Blocks/BlackBlock.vue';
 import Steps from '@/components/ui/Steps/Steps.vue';
 import { SelectList, Size } from '@/entities';
 import GuestLayout from '@/layouts/GuestLayout.vue';
@@ -63,7 +72,7 @@ const submitHandler = async (formData: any, node: FormKitNode | undefined) => {
   }
 
   try {
-    form.post(route('register.step-two'))(formData, node);
+    form.post(route('register.step-two.save'))(formData, node);
     form.addon((on) => {
       on('finish', () => {
         isLoading.value = false;

@@ -31,7 +31,7 @@
   <InputStandard
     :type="InputType.SELECT"
     label="State"
-    name="state"
+    name="state_id"
     validation="required"
     :options="states"
     id="form--state"
@@ -62,7 +62,7 @@ import { onMounted } from 'vue';
 import Autocomplete = google.maps.places.Autocomplete;
 
 interface Props {
-  states: SelectList;
+  states: SelectList[];
 }
 
 const props = defineProps<Props>();

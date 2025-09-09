@@ -1,56 +1,59 @@
 <template>
-  <FormKit
-    type="form"
-    :actions="false"
-    @submit="submitHandler"
-    :incomplete-message="false"
-  >
-    <InputStandard
-      :type="InputType.EMAIL"
-      label="Email Address"
-      validation="required|email"
-      name="email"
-    />
-    <InputStandard
-      :type="InputType.PASSWORD"
-      label="Password"
-      validation="required"
-      suffix-icon="eyeClosed"
-      @suffix-icon-click="handleIconClick"
-      name="password"
-    />
-
+  <BlackBlock>
     <FormKit
-      type="checkbox"
-      label="Remember Me"
-      name="remember"
-      :value="false"
-      decorator-icon="tick"
-    />
+      type="form"
+      :actions="false"
+      @submit="submitHandler"
+      :incomplete-message="false"
+    >
+      <InputStandard
+        :type="InputType.EMAIL"
+        label="Email Address"
+        validation="required|email"
+        name="email"
+      />
+      <InputStandard
+        :type="InputType.PASSWORD"
+        label="Password"
+        validation="required"
+        suffix-icon="eyeClosed"
+        @suffix-icon-click="handleIconClick"
+        name="password"
+      />
 
-    <div class="formkit-outer">
-      <ButtonStandard
-        :size="Size.FULL"
-        :loading="isLoading"
-        :disabled="isLoading"
-        type="submit"
-      >
-        Login
-      </ButtonStandard>
-    </div>
+      <FormKit
+        type="checkbox"
+        label="Remember Me"
+        name="remember"
+        :value="false"
+        decorator-icon="tick"
+      />
 
-    <footer>
-      <Link class="link" :href="route('password.request', routeConfig)">
-        Forgot Password?
-      </Link>
+      <div class="formkit-outer">
+        <ButtonStandard
+          :size="Size.FULL"
+          :loading="isLoading"
+          :disabled="isLoading"
+          type="submit"
+        >
+          Login
+        </ButtonStandard>
+      </div>
+    </FormKit>
+  </BlackBlock>
 
-      <Link class="link" :href="route('register.step-one')"> Register </Link>
-    </footer>
-  </FormKit>
+  <footer>
+    <Link class="link" :href="route('password.request', routeConfig)">
+      Forgot Password?
+    </Link>
+
+    <Link class="link" :href="route('register.step-one')"> Register </Link>
+  </footer>
 </template>
 
 <script setup lang="ts">
 import InputStandard from '@/components/form/InputStandard.vue';
+import BlackBlock from '@/components/ui/Blocks/BlackBlock.vue';
 import { InputType, Size } from '@/entities';
 import { handleIconClick } from '@/utils/Icon';
 import { FormKitNode } from '@formkit/core';
@@ -89,3 +92,9 @@ const submitHandler = async (formData: any, node: FormKitNode | undefined) => {
   }
 };
 </script>
+
+<style scoped>
+footer {
+  margin-top: 1rem;
+}
+</style>

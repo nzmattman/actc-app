@@ -21,19 +21,17 @@ class Onboarded
     public function handle(Request $request, \Closure $next): Response
     {
         $status = $request->user()->onboarding_status;
-        \Log::info('');
-        \Log::info($status);
-        \Log::info(UserDetails::$name);
-        \Log::info(AddressDetails::$name);
-        \Log::info(PaymentDetails::$name);
-        \Log::info(Completed::$name);
         if ($status !== Completed::$name) {
             // find the position in the registration
             switch ($status) {
                 case UserDetails::$name:
-                    \Log::info('we are at user details');
+                    return redirect()->route('register.step-one');
 
+                case AddressDetails::$name:
                     return redirect()->route('register.step-two');
+
+                case PaymentDetails::$name:
+                    return redirect()->route('register.step-three');
             }
         }
 

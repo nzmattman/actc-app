@@ -2,7 +2,10 @@ import '../css/app.css';
 
 import { defaultConfig, plugin as formkitPlugin } from '@formkit/vue';
 import { createInertiaApp, Link } from '@inertiajs/vue3';
+import Aura from '@primeuix/themes/aura';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
+import PrimeVue from 'primevue/config';
+import ToastService from 'primevue/toastservice';
 import type { DefineComponent } from 'vue';
 import { createApp, h } from 'vue';
 import { ZiggyVue } from 'ziggy-js';
@@ -22,6 +25,12 @@ createInertiaApp({
       .use(plugin)
       .use(ZiggyVue)
       .use(formkitPlugin, defaultConfig(config))
+      .use(PrimeVue, {
+        theme: {
+          preset: Aura,
+        },
+      })
+      .use(ToastService)
       .component('Link', Link)
       .mount(el);
   },

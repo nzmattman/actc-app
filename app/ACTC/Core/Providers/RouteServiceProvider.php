@@ -7,6 +7,7 @@ namespace ACTC\Core\Providers;
 use ACTC\Core\Aggregates\RouteAggregate;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -32,8 +33,7 @@ class RouteServiceProvider extends ServiceProvider
                 foreach ($routeAggregate->getRouteFiles('auth') as $routeFile) {
                     include $routeFile;
                 }
-            })
-        ;
+            });
     }
 
     protected function mapWebRoutes(): void
@@ -45,7 +45,8 @@ class RouteServiceProvider extends ServiceProvider
                 foreach ($routeAggregate->getRouteFiles('web') as $routeFile) {
                     include $routeFile;
                 }
-            })
-        ;
+            });
+
+        Route::middleware(['web', 'auth'])->get('logout', [AuthenticatedSessionController::class, 'destroy'])->name('auth.logout');
     }
 }
