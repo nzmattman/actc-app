@@ -7,4 +7,5 @@ export * from './modules';
 export * from './plugins';
 export * from './routines';
 export * from './stripe';
+export * from './subscriptions';
 export * from './user';

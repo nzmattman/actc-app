@@ -3,13 +3,21 @@ body {
   overflow: hidden;
 }
 
-a {
+a,
+.link {
   &:hover {
     opacity: var(--opacity);
   }
 }
 
+button.link {
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+}
+
 a,
+.link,
 .button {
   transition:
     color var(--transition),

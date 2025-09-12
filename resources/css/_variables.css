@@ -39,4 +39,7 @@
 
   --header-height: calc(var(--site-padding) + 31px);
   --footer-height: calc(var(--site-padding) + 36px);
+
+  --p-primary-color: var(--gold) !important;
+  --p-primary-300: #7a522a !important;
 }

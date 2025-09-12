@@ -5,6 +5,7 @@ import { createInertiaApp, Link } from '@inertiajs/vue3';
 import Aura from '@primeuix/themes/aura';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import PrimeVue from 'primevue/config';
+import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
 import type { DefineComponent } from 'vue';
 import { createApp, h } from 'vue';
@@ -31,6 +32,7 @@ createInertiaApp({
         },
       })
       .use(ToastService)
+      .use(ConfirmationService)
       .component('Link', Link)
       .mount(el);
   },

@@ -8,6 +8,10 @@
           title="Update Password"
           :route="route('profile.password.edit')"
         />
+        <ListItem
+          title="Manage Subscription"
+          :route="route('subscriptions.index')"
+        />
         <ListItem title="Logout" :route="route('logout')" />
       </List>
     </BlockContent>

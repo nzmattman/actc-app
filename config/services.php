@@ -37,12 +37,16 @@ return [
     ],
 
     'google' => [
-        'api_key' => ENV('GOOGLE_API_KEY'),
+        'api_key' => env('GOOGLE_API_KEY'),
+        'credentials' => storage_path('app/model-farm-71dadaec89d3.json'),
+        'sheets' => [
+            'results' => env('GOOGLE_SHEETS_RESULTS_DOCUMENT_ID'),
+        ],
     ],
 
     'stripe' => [
         'subscription' => [
             'id' => env('STRIPE_SUBSCRIPTION_ID'),
-        ]
-    ]
+        ],
+    ],
 ];

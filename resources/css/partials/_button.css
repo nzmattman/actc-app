@@ -1,0 +1,84 @@
+.button {
+  display: inline-flex;
+  min-width: 170px;
+  border-radius: 50px;
+  background-color: var(--gold);
+  color: var(--white);
+  padding: 1rem 1.5rem;
+  font-weight: bold;
+  line-height: 1;
+  border: 1px solid var(--gold);
+  transition: background-color var(--transition);
+  cursor: pointer;
+  justify-content: center;
+}
+
+.button:hover {
+  opacity: 1;
+}
+
+.button .arrow {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  background-color: var(--white);
+  color: var(--gold);
+  border-radius: 50%;
+  border: 1px solid var(--white);
+  transition:
+    background-color var(--transition),
+    border-color var(--transition);
+}
+
+.button .arrow svg {
+  margin: auto;
+  width: 20%;
+}
+
+.button:hover,
+.button--ghost {
+  background-color: transparent;
+}
+.button:hover .arrow,
+.button--ghost .arrow {
+  border-color: var(--gold);
+  background-color: transparent;
+}
+
+.button--ghost:hover {
+  background-color: var(--gold);
+}
+.button--ghost:hover .arrow {
+  background-color: var(--white);
+  border: 1px solid var(--white);
+}
+
+.button--with-arrow,
+.button--loading {
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.button--loading {
+  justify-content: center;
+}
+.button--loading svg {
+  width: 16px;
+}
+
+.button--full {
+  width: 100%;
+}
+
+.button--small {
+  padding: 0.75rem 0.5rem;
+}
+
+.button--disabled {
+  cursor: default;
+  pointer-events: none;
+  background-color: var(--grey);
+  border-color: var(--grey);
+  opacity: var(--opacity);
+}

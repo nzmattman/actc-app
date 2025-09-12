@@ -1,0 +1,14 @@
+.loading__row {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(var(--count, 3), 1fr);
+}
+
+.loading__block {
+  background-color: #606060;
+  height: var(--block-height);
+}
+
+.loading__row + .loading__row {
+  margin-top: 1rem;
+}

@@ -1,0 +1,33 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 4px 10px;
+}
+
+.table th {
+  text-align: left;
+}
+
+.table th.text--right {
+  text-align: right;
+}
+
+.table tbody tr {
+  transition: background-color var(--transition);
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: var(--black-400);
+}
+
+.table tbody tr:hover {
+  background-color: var(--black-300);
+}
+
+.table thead tr {
+  background-color: var(--black-600);
+}

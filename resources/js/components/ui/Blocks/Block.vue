@@ -59,6 +59,11 @@ const classList = computed(() => {
 </style>
 
 <style>
+
+.block header {
+  margin-bottom: 1rem;
+}
+
 .block header h4 {
   margin: 0;
   font-size: 1.5rem;

@@ -9,4 +9,8 @@
 @import './partials/_space.css';
 @import './partials/_block.css';
 @import './partials/_aus-map.css';
+@import './partials/_table.css';
 @import './partials/_cart.css';
+@import './partials/_loading-block.css';
+@import './partials/_animations.css';
+@import './partials/_button.css';
