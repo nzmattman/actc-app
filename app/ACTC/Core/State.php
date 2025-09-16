@@ -6,7 +6,10 @@ namespace ACTC\Core;
 
 use ACTC\Clubs\Club;
 use ACTC\Core\Traits\HasUuid;
+use ACTC\Results\ResultCategory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Spatie\Sluggable\HasSlug;
@@ -23,19 +26,21 @@ use Spatie\Sluggable\SlugOptions;
  * @property string $slug
  * @property-read \Illuminate\Database\Eloquent\Collection<int, Club> $clubs
  * @property-read int|null $clubs_count
- * @method static \Illuminate\Database\Eloquent\Builder<static>|State newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|State newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|State ordered(string $direction = 'asc')
- * @method static \Illuminate\Database\Eloquent\Builder<static>|State query()
- * @method static \Illuminate\Database\Eloquent\Builder<static>|State uuid(string $uuid)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|State whereCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|State whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|State whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|State whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|State wherePosition($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|State whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|State whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|State whereUuid($value)
+ * @method static Builder<static>|State newModelQuery()
+ * @method static Builder<static>|State newQuery()
+ * @method static Builder<static>|State ordered(string $direction = 'asc')
+ * @method static Builder<static>|State query()
+ * @method static Builder<static>|State uuid(string $uuid)
+ * @method static Builder<static>|State whereCode($value)
+ * @method static Builder<static>|State whereCreatedAt($value)
+ * @method static Builder<static>|State whereId($value)
+ * @method static Builder<static>|State whereName($value)
+ * @method static Builder<static>|State wherePosition($value)
+ * @method static Builder<static>|State whereSlug($value)
+ * @method static Builder<static>|State whereUpdatedAt($value)
+ * @method static Builder<static>|State whereUuid($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, ResultCategory> $competitions
+ * @property-read int|null $competitions_count
  * @mixin \Eloquent
  */
 class State extends Model implements Sortable
@@ -56,11 +61,10 @@ class State extends Model implements Sortable
     {
         return SlugOptions::create()
             ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug')
-        ;
+            ->saveSlugsTo('slug');
     }
 
-    public function clubs()
+    public function clubs(): HasManyThrough
     {
         return $this->hasManyThrough(
             Club::class,     // Final model we want
@@ -70,5 +74,10 @@ class State extends Model implements Sortable
             'id',            // Local key on states table
             'id'             // Local key on addresses table
         );
+    }
+
+    public function competitions()
+    {
+        return $this->hasMany(ResultCategory::class);
     }
 }

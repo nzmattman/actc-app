@@ -41,10 +41,6 @@ const classList = computed(() => {
 
 <style scoped>
 
-.block {
-
-}
-
 .block--inline {
   padding-inline: var(--site-padding);
 }
@@ -67,5 +63,14 @@ const classList = computed(() => {
 .block header h4 {
   margin: 0;
   font-size: 1.5rem;
+}
+
+.block header h3 {
+  margin: 0;
+  font-size: 2.15rem;
+}
+
+.block header:has(h3) {
+  margin-bottom: 0;
 }
 </style>

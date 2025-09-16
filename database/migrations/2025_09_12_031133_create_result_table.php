@@ -18,8 +18,8 @@ return new class extends Migration
             $table->uuid();
             $table->timestamps();
             $table->softDeletes();
-            $table->timestamp('start_at');
-            $table->timestamp('end_at');
+            $table->timestamp('start_at')->nullable();
+            $table->timestamp('end_at')->nullable();
             $table->boolean('active')->default(1);
             $table->integer('position')->default(0);
             $table->string('name');

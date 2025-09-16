@@ -41,7 +41,6 @@ use Spatie\ModelStates\HasStatesContract;
  * @property Address                                                   $address
  * @property DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property null|int                                                  $notifications_count
- *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User onlyTrashed()
@@ -68,7 +67,19 @@ use Spatie\ModelStates\HasStatesContract;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUuid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutTrashed()
- *
+ * @property string|null $stripe_id
+ * @property string|null $pm_type
+ * @property string|null $pm_last_four
+ * @property string|null $trial_ends_at
+ * @property-read string $name
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Cashier\Subscription> $subscriptions
+ * @property-read int|null $subscriptions_count
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User hasExpiredGenericTrial()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User onGenericTrial()
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePmLastFour($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePmType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereStripeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereTrialEndsAt($value)
  * @mixin \Eloquent
  */
 #[ObservedBy([UserObserver::class])]

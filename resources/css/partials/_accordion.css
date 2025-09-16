@@ -1,0 +1,38 @@
+.accordion {
+  --p-accordion-header-toggle-icon-color: var(--gold);
+  --p-accordion-header-toggle-icon-hover-color: var(--gold);
+  --p-accordion-header-toggle-icon-active-color: var(--gold);
+  --p-accordion-header-toggle-icon-active-hover-color: var(--gold);
+  --p-accordion-header-background: transparent;
+  --p-accordion-header-hover-background: transparent;
+  --p-accordion-header-active-background: transparent;
+  --p-accordion-header-active-hover-background: transparent;
+  --p-accordion-panel-border-color: var(--grey);
+  --p-accordion-header-color: var(--white);
+  --p-accordion-header-active-color: var(--white);
+  --p-accordion-header-first-top-border-radius: 0;
+  --p-accordion-content-background: transparent;
+  --p-accordion-header-padding: 1.125rem 0;
+  --p-icon-size: 20px;
+}
+
+.accordion .list li:last-child {
+  border-bottom: 0;
+}
+
+.accordion .p-accordioncontent-content {
+  padding-right: 0;
+  padding-bottom: 0.25rem;
+}
+
+.accordion .p-accordionpanel-active .p-accordionheader {
+  border-bottom: 1px solid var(--grey) !important;
+  margin-bottom: 1.125rem;
+}
+
+.accordion .p-accordionpanel .p-icon {
+  transition: rotate var(--transition);
+}
+.accordion .p-accordionpanel-active .p-icon {
+  rotate: 90deg;
+}

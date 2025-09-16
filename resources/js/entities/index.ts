@@ -5,6 +5,7 @@ export * from './discount';
 export * from './form';
 export * from './modules';
 export * from './plugins';
+export * from './results';
 export * from './routines';
 export * from './stripe';
 export * from './subscriptions';

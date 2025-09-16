@@ -1,56 +1,58 @@
 <template>
   <MasterLayout>
-    <main>
-      <header
-        class="app__header"
-        :class="backRoute ? ' app__header--with-back' : ''"
-      >
-        <aside v-if="backRoute">
-          <span>
-            <Link :href="backRoute">
-              <IconArrowLeft />
+    <div>
+      <figure class="background" v-if="backgroundDesktop && backgroundMobile">
+        <Image :desktop="backgroundDesktop" :mobile="backgroundMobile" />
+      </figure>
+      <main>
+        <header
+          class="app__header"
+          :class="backRoute ? ' app__header--with-back' : ''"
+        >
+          <aside v-if="backRoute">
+            <span>
+              <Link :href="backRoute">
+                <IconArrowLeft />
+              </Link>
+            </span>
+          </aside>
+
+          <div>
+            <h1 v-if="title">{{ title }}</h1>
+          </div>
+
+          <nav>
+            <Link href="/" class="has-notification">
+              <IconBell />
+              <NotificationDot />
             </Link>
-          </span>
-        </aside>
+            <Link :href="route('profile.index')">
+              <IconUser />
+            </Link>
+          </nav>
+        </header>
 
-        <div>
-          <h1 v-if="title">{{ title }}</h1>
-        </div>
+        <section class="app__body" :class="bodyClassList">
+          <div :class="bodyInnerClassList">
+            <slot> </slot>
+          </div>
+        </section>
 
-        <nav>
-          <Link href="/" class="has-notification">
-            <IconBell />
-            <NotificationDot />
-          </Link>
-          <Link :href="route('profile.index')">
-            <IconUser />
-          </Link>
-        </nav>
-      </header>
-
-      <section class="app__body" :class="bodyClassList">
-        <div :class="bodyInnerClassList">
-          <slot> </slot>
-        </div>
-      </section>
-
-      <footer class="app__footer">
-        <nav>
-          <NavItem href="dashboard" title="Home">
-            <IconHome />
-          </NavItem>
-          <NavItem href="clubs" title="Clubs">
-            <IconClub />
-          </NavItem>
-          <NavItem href="dashboard" title="Home">
-            <IconHome />
-          </NavItem>
-          <NavItem href="dashboard" title="Home">
-            <IconHome />
-          </NavItem>
-        </nav>
-      </footer>
-    </main>
+        <footer class="app__footer">
+          <nav>
+            <NavItem href="dashboard" title="Home">
+              <IconHome />
+            </NavItem>
+            <NavItem href="clubs" title="Clubs">
+              <IconClub />
+            </NavItem>
+            <NavItem href="results" title="Results">
+              <IconResult />
+            </NavItem>
+          </nav>
+        </footer>
+      </main>
+    </div>
   </MasterLayout>
 </template>
 
@@ -58,12 +60,14 @@
 import NavItem from '@/components/nav/NavItem.vue';
 import MasterLayout from '@/layouts/MasterLayout.vue';
 
+import Image from '@/components/ui/Image.vue';
 import { Link } from '@inertiajs/vue3';
 import IconArrowLeft from '@svg/icon-arrow-left.svg?component';
 import IconBell from '@svg/icon-bell.svg?component';
 import IconClub from '@svg/icon-club.svg?component';
 import IconHome from '@svg/icon-home.svg?component';
 import IconUser from '@svg/icon-user.svg?component';
+import IconResult from '@svg/icon-weight.svg?component';
 import NotificationDot from '@ui/NotificationDot.vue';
 import { computed } from 'vue';
 
@@ -73,6 +77,8 @@ interface Props {
   hasFixedTitle?: boolean;
   fullWidth?: boolean;
   fullHeight?: boolean;
+  backgroundDesktop?: string;
+  backgroundMobile?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -110,6 +116,8 @@ main {
   display: grid;
   grid-template-rows: var(--header-height) 1fr var(--footer-height);
   height: 100vh;
+  position: relative;
+  z-index: 2;
 }
 
 .app__body {

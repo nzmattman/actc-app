@@ -1,8 +1,8 @@
 <template>
-  <Link :href="route(item.route)" class="block__content block__content--thin">
+  <Link :href="route" class="block__content block__content--thin">
     <h6>{{ item.state }}</h6>
     <h4>{{ item.name }}</h4>
-    <h5>{{ item.division }}</h5>
+    <h5>{{ item.date }}</h5>
   </Link>
 </template>
 
@@ -12,6 +12,7 @@ import { Link } from '@inertiajs/vue3';
 
 interface Props {
   item: ResultsListItem;
+  route: string;
 }
 
 defineProps<Props>();

@@ -56,21 +56,6 @@ const classList = computed(() => {
   background: rgba(0, 0, 0, 0.2);
 }
 
-.background {
-  width: 100%;
-  height: 100dvh;
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-}
-
-.background img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
 .v-align--top {
   justify-content: flex-start;
 }

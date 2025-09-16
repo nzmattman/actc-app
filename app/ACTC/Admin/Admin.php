@@ -52,6 +52,8 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Admin whereUuid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Admin withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Admin withoutTrashed()
+ * @property string|null $status
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Admin whereStatus($value)
  * @mixin \Eloquent
  */
 class Admin extends Authenticatable implements FilamentUser, HasName, MustVerifyEmail

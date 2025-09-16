@@ -10,6 +10,9 @@
       <header v-if="slots.header">
         <slot name="header"></slot>
       </header>
+
+      <slot></slot>
+
       <footer v-if="href">
         <ButtonStandard :href="href" full :size="Size.SMALL" :useLink="true">
           {{ buttonText ?? 'Find out more' }}
@@ -23,7 +26,7 @@ import { Size } from '@/entities';
 import ButtonStandard from '@ui/ButtonStandard.vue';
 
 interface Props {
-  href: string;
+  href?: string;
   buttonText?: string;
 }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ACTC\Results\Commands;
 
 use ACTC\Core\State;
@@ -11,6 +13,7 @@ use Google\Service\Sheets;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 class ImportResults extends Command
 {
@@ -51,7 +54,6 @@ class ImportResults extends Command
         // truncate the tables
         Schema::disableForeignKeyConstraints();
         DB::table('results')->truncate();
-        DB::table('result_categories')->truncate();
         Schema::enableForeignKeyConstraints();
 
         foreach ($sheets as $sheet) {
@@ -94,7 +96,7 @@ class ImportResults extends Command
 
         $headers = array_splice($values, 0, 6);
 
-        $competition = $this->createCompetition($headers);
+        $competition = $this->updateOrCreateCompetition($headers);
 
         foreach ($values as $rowIndex => $row) {
             try {
@@ -107,6 +109,8 @@ class ImportResults extends Command
                     'result_category_id' => $competition->id,
                     'section' => $row[0] ?? null,
                     'division' => $row[1] ?? null,
+                    'section_slug' => $row[0] ? Str::slug($row[0]) : null,
+                    'division_slug' => $row[1] ? Str::slug($row[1]) : null,
                     'item' => $row[2] ?? null,
                     'position' => $row[3] ?? null,
                     'name' => $row[4] ?? null,
@@ -115,11 +119,11 @@ class ImportResults extends Command
 
                 Result::create($data);
 
-                $processed++;
+                ++$processed;
             } catch (\Exception $e) {
                 $this->newLine();
                 $this->error('    Error processing row '.($rowIndex + 2).': '.$e->getMessage());
-                $errors++;
+                ++$errors;
             }
 
             $progressBar->advance();
@@ -130,12 +134,10 @@ class ImportResults extends Command
         $this->info("    Processed: {$processed} rows, Errors: {$errors}");
     }
 
-    private function createCompetition($headers)
+    private function updateOrCreateCompetition($headers): ResultCategory
     {
         $data = [
             'name' => '',
-            'start_at' => '',
-            'end_at' => '',
             'state_id' => 0,
         ];
 
@@ -146,33 +148,43 @@ class ImportResults extends Command
                 continue;
             }
 
-            if ($header[0] === 'Competition Name') {
+            if ('Competition Name' === $header[0]) {
                 $data['name'] = $header[1];
             }
 
-            if ($header[0] === 'Competition Date From') {
-                $data['start_at'] = Carbon::parse($header[1]);
+            if ('Competition Date From' === $header[0] && isset($header[1]) && trim($header[1])) {
+                $data['start_at'] = Carbon::createFromFormat('d/m/Y', trim($header[1]));
             }
 
-            if ($header[0] === 'Competition Date To') {
-                $data['end_at'] = Carbon::parse($header[1]);
+            if ('Competition Date To' === $header[0] && isset($header[1]) && trim($header[1])) {
+                $data['end_at'] = Carbon::createFromFormat('d/m/Y', trim($header[1]));
             }
 
-            if ($header[0] === 'State') {
+            if ('State' === $header[0]) {
                 $data['state_id'] = $states[$header[1]] ?? null;
             }
         }
 
-        return ResultCategory::create($data);
+        $category = ResultCategory::updateOrCreate(
+            [
+                'name' => $data['name'],
+                'state_id' => $data['state_id'],
+            ],
+            $data
+        );
+
+        $category->touch();
+
+        return $category;
     }
 
     private function getGoogleClient(): Client
     {
-        $client = new Client;
+        $client = new Client();
 
         // Set credentials
         $credentialsPath = config('services.google.credentials');
-        if (! file_exists($credentialsPath)) {
+        if (!file_exists($credentialsPath)) {
             throw new \Exception("Credentials file not found at: {$credentialsPath}");
         }
 

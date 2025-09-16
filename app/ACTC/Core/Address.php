@@ -28,7 +28,6 @@ use Illuminate\Support\Carbon;
  * @property null|string $postcode
  * @property mixed       $full_address
  * @property null|State  $state
- *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Address newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Address newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Address query()
@@ -46,7 +45,6 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Address whereSuburb($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Address whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Address whereUuid($value)
- *
  * @mixin \Eloquent
  */
 class Address extends Model
