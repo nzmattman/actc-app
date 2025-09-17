@@ -16,10 +16,6 @@ class Division
     {
         $competition->load('results');
 
-        if ('not-set' === $division) {
-            $division = null;
-        }
-
         $results = $competition->results->filter(function ($item) use ($section, $division) {
             if ($item->section_slug === $section && $item->division_slug === $division) {
                 return true;
@@ -35,6 +31,7 @@ class Division
             'division' => $results->first()->division,
             'state' => $state->name,
             'slug' => $state->slug,
+            'code' => strtolower($state->code),
             'aggregate' => $this->find($results, 'Aggregate'),
             'runner_up' => $this->find($results, 'Runner Up'),
             'items' => $this->formatDivisions($results),

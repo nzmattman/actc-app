@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace ACTC\Users\Actions;
+namespace ACTC\Users\Actions\Password;
 
 use Inertia\Inertia;
 use Inertia\Response;
 
-class ProfileEdit
+class PasswordEdit
 {
     public function __invoke(): Response
     {
-        return Inertia::render('Profile/Edit', [
+        return Inertia::render('Profile/EditPassword', [
             'status' => session('status'),
         ]);
     }

@@ -96,45 +96,56 @@ class ImportResults extends Command
 
         $headers = array_splice($values, 0, 6);
 
-        $competition = $this->updateOrCreateCompetition($headers);
+        try {
+            $competition = $this->updateOrCreateCompetition($headers);
 
-        foreach ($values as $rowIndex => $row) {
-            try {
-                // Combine headers with row data
-                if (count($row) < 1) {
-                    continue;
-                }
-
-                $data = [
-                    'result_category_id' => $competition->id,
-                    'section' => $row[0] ?? null,
-                    'division' => $row[1] ?? null,
-                    'section_slug' => $row[0] ? Str::slug($row[0]) : null,
-                    'division_slug' => $row[1] ? Str::slug($row[1]) : null,
-                    'item' => $row[2] ?? null,
-                    'position' => $row[3] ?? null,
-                    'name' => $row[4] ?? null,
-                    'points' => $row[5] ?? null,
-                ];
-
-                Result::create($data);
-
-                ++$processed;
-            } catch (\Exception $e) {
-                $this->newLine();
-                $this->error('    Error processing row '.($rowIndex + 2).': '.$e->getMessage());
-                ++$errors;
+            if (!$competition) {
+                return;
             }
 
-            $progressBar->advance();
+            foreach ($values as $rowIndex => $row) {
+                try {
+                    // Combine headers with row data
+                    if (count($row) < 1) {
+                        continue;
+                    }
+
+                    $data = [
+                        'result_category_id' => $competition->id,
+                        'section' => $row[0] ?? null,
+                        'division' => $row[1] ?? null,
+                        'section_slug' => $row[0] ? Str::slug($row[0]) : 'not-set',
+                        'division_slug' => $row[1] ? Str::slug($row[1]) : 'not-set',
+                        'item' => $row[2] ?? null,
+                        'position' => $row[3] ?? null,
+                        'name' => $row[4] ?? null,
+                        'points' => $row[5] ?? null,
+                    ];
+
+                    Result::create($data);
+
+                    ++$processed;
+                } catch (\Exception $e) {
+                    $this->newLine();
+                    $this->error('    Error processing row '.($rowIndex + 2).': '.$e->getMessage());
+                    ++$errors;
+                }
+
+                $progressBar->advance();
+            }
+        } catch (\Exception $e) {
+            $this->newLine();
+            $this->error('    Error processing row '.$sheetTitle.': '.$e->getMessage());
+            ++$errors;
         }
 
         $progressBar->finish();
         $this->newLine();
         $this->info("    Processed: {$processed} rows, Errors: {$errors}");
+        $this->newLine();
     }
 
-    private function updateOrCreateCompetition($headers): ResultCategory
+    private function updateOrCreateCompetition($headers): ?ResultCategory
     {
         $data = [
             'name' => '',
@@ -160,22 +171,26 @@ class ImportResults extends Command
                 $data['end_at'] = Carbon::createFromFormat('d/m/Y', trim($header[1]));
             }
 
-            if ('State' === $header[0]) {
+            if ('State' === $header[0] && isset($header[1])) {
                 $data['state_id'] = $states[$header[1]] ?? null;
             }
         }
 
-        $category = ResultCategory::updateOrCreate(
-            [
-                'name' => $data['name'],
-                'state_id' => $data['state_id'],
-            ],
-            $data
-        );
+        if ($data['state_id'] > 1) {
+            $category = ResultCategory::updateOrCreate(
+                [
+                    'name' => $data['name'],
+                    'state_id' => $data['state_id'],
+                ],
+                $data
+            );
 
-        $category->touch();
+            $category->touch();
 
-        return $category;
+            return $category;
+        }
+
+        return null;
     }
 
     private function getGoogleClient(): Client

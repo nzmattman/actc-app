@@ -3,6 +3,11 @@ export interface ResultsListItem {
   state: string;
   name: string;
   route: string;
-  slug: string;
+  slug: {
+    state: string;
+    competition: string;
+    section: string;
+    division: string;
+  };
   date: string;
 }

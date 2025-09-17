@@ -53,24 +53,3 @@ const classList = computed(() => {
   padding: 1.5rem;
 }
 </style>
-
-<style>
-
-.block header {
-  margin-bottom: 1rem;
-}
-
-.block header h4 {
-  margin: 0;
-  font-size: 1.5rem;
-}
-
-.block header h3 {
-  margin: 0;
-  font-size: 2.15rem;
-}
-
-.block header:has(h3) {
-  margin-bottom: 0;
-}
-</style>

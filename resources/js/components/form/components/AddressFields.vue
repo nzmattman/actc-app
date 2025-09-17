@@ -4,6 +4,7 @@
     label="Address"
     validation="required"
     name="street_address"
+    :value="address?.street_address"
     id="form--street-address"
   />
 
@@ -11,6 +12,7 @@
     :type="InputType.TEXT"
     label="Address 2"
     name="street_address_2"
+    :value="address?.street_address_2"
     id="form--street-address-2"
   />
 
@@ -18,6 +20,7 @@
     :type="InputType.TEXT"
     label="Suburb"
     name="suburb"
+    :value="address?.suburb"
     id="form--suburb"
   />
 
@@ -25,6 +28,7 @@
     :type="InputType.TEXT"
     label="City"
     name="city"
+    :value="address?.city"
     id="form--city"
   />
 
@@ -32,6 +36,7 @@
     :type="InputType.SELECT"
     label="State"
     name="state_id"
+    :value="address?.state_id"
     validation="required"
     :options="states"
     id="form--state"
@@ -41,6 +46,7 @@
     :type="InputType.TEXT"
     label="Postcode"
     name="postcode"
+    :value="address?.postcode"
     validation="required"
     id="form--postcode"
   />
@@ -63,6 +69,7 @@ import Autocomplete = google.maps.places.Autocomplete;
 
 interface Props {
   states: SelectList[];
+  address?: Address;
 }
 
 const props = defineProps<Props>();

@@ -51,9 +51,11 @@
                 v-for="item in results"
                 :key="item.id"
                 :route="
-                  route('results.competition', {
-                    slug: item.slug,
-                    competition: item.id,
+                  route('results.division', {
+                    slug: item.slug.state,
+                    competition: item.slug.competition,
+                    section: item.slug.section,
+                    division: item.slug.division,
                   })
                 "
               />

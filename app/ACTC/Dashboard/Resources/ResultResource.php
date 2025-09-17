@@ -12,14 +12,18 @@ class ResultResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
-        \Log::info(print_r($this->resource::class, true));
-        \Log::info((new GetDateRange())($this->resource));
+        $item = $this->results->first();
 
         return [
             'id' => $this->uuid,
             'name' => $this->name,
             'state' => $this->state->code,
-            'slug' => $this->state->slug,
+            'slug' => [
+                'state' => $this->state->slug,
+                'competition' => $this->uuid,
+                'section' => $item->section_slug,
+                'division' => $item->division_slug ?? 'not-set',
+            ],
             'date' => (new GetDateRange())($this->resource),
         ];
     }

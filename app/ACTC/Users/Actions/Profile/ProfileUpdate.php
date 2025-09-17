@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ACTC\Users\Actions;
+namespace ACTC\Users\Actions\Profile;
 
 use ACTC\Users\Requests\ProfileUpdateRequest;
 use Illuminate\Http\RedirectResponse;

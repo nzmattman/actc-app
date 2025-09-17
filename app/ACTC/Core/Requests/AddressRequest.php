@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace ACTC\Users\Requests;
+namespace ACTC\Core\Requests;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterStepTwoRequest extends FormRequest
+class AddressRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.

@@ -1,5 +1,6 @@
 export interface Address {
   [key: string]: string | number | undefined;
+  uuid?: string;
   street_address: string;
   street_address_2?: string;
   city?: string;

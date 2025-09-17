@@ -2,11 +2,16 @@
 
 declare(strict_types=1);
 
-use ACTC\Users\Actions\PasswordEdit;
-use ACTC\Users\Actions\PasswordUpdate;
-use ACTC\Users\Actions\ProfileEdit;
-use ACTC\Users\Actions\ProfileIndex;
-use ACTC\Users\Actions\ProfileUpdate;
+use ACTC\Users\Actions\Address\AddressEdit;
+use ACTC\Users\Actions\Address\AddressUpdate;
+use ACTC\Users\Actions\Card\CardDefault;
+use ACTC\Users\Actions\Card\CardDelete;
+use ACTC\Users\Actions\Card\CardIndex;
+use ACTC\Users\Actions\Password\PasswordEdit;
+use ACTC\Users\Actions\Password\PasswordUpdate;
+use ACTC\Users\Actions\Profile\ProfileEdit;
+use ACTC\Users\Actions\Profile\ProfileIndex;
+use ACTC\Users\Actions\Profile\ProfileUpdate;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('profile')->name('profile.')->group(function () {
@@ -14,6 +19,13 @@ Route::prefix('profile')->name('profile.')->group(function () {
     Route::get('/edit', ProfileEdit::class)->name('edit');
     Route::patch('/', ProfileUpdate::class)->name('update');
 
+    Route::get('/address/edit', AddressEdit::class)->name('address.edit');
+    Route::patch('/address', AddressUpdate::class)->name('address.update');
+
     Route::get('/update-password', PasswordEdit::class)->name('password.edit');
     Route::put('/reset-password', PasswordUpdate::class)->name('password.update');
+
+    Route::get('/card', CardIndex::class)->name('card');
+    Route::delete('/card/{id}', CardDelete::class)->name('card.delete');
+    Route::patch('/card/{id}', CardDefault::class)->name('card.default');
 });

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace ACTC\Users\Actions;
+namespace ACTC\Users\Actions\Password;
 
 use ACTC\Users\Requests\PasswordUpdateRequest;
 use Illuminate\Http\RedirectResponse;

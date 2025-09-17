@@ -1,5 +1,5 @@
 <template>
-  <Head :title="name" />
+  <Head :title="competition.name" />
   <AuthenticatedLayout
     :title="state"
     :backRoute="route('results.state', { slug: slug })"
@@ -80,13 +80,12 @@ interface Props {
   division: string;
   state: string;
   slug: string;
-  name: string;
   code: string;
-  aggregate: {
+  aggregate?: {
     name: string;
     points: string;
   };
-  runner_up: {
+  runner_up?: {
     name: string;
     points: string;
   };

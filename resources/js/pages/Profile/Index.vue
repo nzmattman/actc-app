@@ -4,6 +4,7 @@
     <BlockContent>
       <List>
         <ListItem title="Edit Profile" :route="route('profile.edit')" />
+        <ListItem title="Edit Address" :route="route('profile.address.edit')" />
         <ListItem
           title="Update Password"
           :route="route('profile.password.edit')"
@@ -12,6 +13,7 @@
           title="Manage Subscription"
           :route="route('subscriptions.index')"
         />
+        <ListItem title="Manage Credit Card" :route="route('profile.card')" />
         <ListItem title="Logout" :route="route('logout')" />
       </List>
     </BlockContent>

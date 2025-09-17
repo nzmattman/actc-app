@@ -45,6 +45,7 @@
         "lucide-vue-next": "^0.468.0",
         "primevue": "^4.3.9",
         "reka-ui": "^2.5.0",
+        "sweetalert": "^2.1.2",
         "typescript": "^5.2.2",
         "vite": "^7.0.4",
         "vue": "^3.5.13",

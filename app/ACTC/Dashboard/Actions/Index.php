@@ -37,7 +37,11 @@ class Index
 
     private function fetchResults(): array
     {
-        $results = ResultCategory::orderBy('start_at', 'desc')->limit(6)->get();
+        $results = ResultCategory::whereHas('results')
+            ->orderBy('start_at', 'desc')
+            ->limit(6)
+            ->get()
+        ;
 
         return ResultResource::collection($results)->resolve();
     }

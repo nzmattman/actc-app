@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ACTC\Core\Traits;
 
 use ACTC\Core\Address;
+use ACTC\Core\Data\AddressData;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 trait HasAddress
@@ -72,5 +73,18 @@ trait HasAddress
     public function address(): BelongsTo
     {
         return $this->belongsTo(Address::class);
+    }
+
+    public function updateAddress(AddressData $data): void
+    {
+        $address = Address::updateOrCreate(
+            [
+                'id' => $this->address_id ?? null,
+            ],
+            $data->toArray()
+        );
+
+        $this->address_id = $address->id;
+        $this->save();
     }
 }

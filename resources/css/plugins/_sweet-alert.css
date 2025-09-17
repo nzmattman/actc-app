@@ -1,0 +1,26 @@
+.swal-button {
+  transition: opacity var(--transition);
+}
+
+.swal-button,
+.swal-button:not([disabled]):hover {
+  background-color: var(--gold);
+}
+
+.swal-button--danger,
+.swal-button--danger:not([disabled]):hover {
+  background-color: var(--alert-red);
+}
+
+.swal-button:not([disabled]):hover {
+  opacity: var(--opacity);
+}
+
+.swal-icon--warning {
+  border-color: var(--gold);
+  animation: none;
+}
+.swal-icon--warning__body,
+.swal-icon--warning__dot {
+  background-color: var(--gold);
+}

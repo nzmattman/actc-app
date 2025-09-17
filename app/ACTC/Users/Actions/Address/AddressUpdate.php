@@ -2,23 +2,20 @@
 
 declare(strict_types=1);
 
-namespace ACTC\Users\Actions\Register;
+namespace ACTC\Users\Actions\Address;
 
 use ACTC\Core\Data\AddressData;
 use ACTC\Core\Requests\AddressRequest;
-use ACTC\Users\States\OnboardingStatus\PaymentDetails;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 
-class Step02Save
+class AddressUpdate
 {
     public function __invoke(AddressRequest $request): RedirectResponse
     {
         $user = $request->user();
         $user->updateAddress(AddressData::fromArray($request->validated()));
 
-        $user->onboarding_status->transitionTo(PaymentDetails::class);
-        $user->save();
-
-        return redirect()->route('register.step-three');
+        return Redirect::route('profile.address.edit')->with('status', 'Your address has been updated.');
     }
 }
