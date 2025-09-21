@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ACTC\Users\Actions\Register;
 
+use ACTC\Core\States\Status\Cancelled;
 use ACTC\Users\States\OnboardingStatus\AddressDetails;
 use ACTC\Users\States\OnboardingStatus\Completed;
 use ACTC\Users\States\OnboardingStatus\UserDetails;
@@ -39,6 +40,10 @@ class Step03
             'intent' => $user->createSetupIntent()->client_secret,
             'value' => $price->unit_amount / 100,
         ];
+
+        if (is_a($user->status, Cancelled::class)) {
+            $config['cancelled'] = true;
+        }
 
         return Inertia::render('Auth/Register/Step03', $config);
     }

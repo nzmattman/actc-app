@@ -5,15 +5,17 @@ declare(strict_types=1);
 namespace ACTC\Users\Actions\Register;
 
 use ACTC\Core\States\Status\Active;
+use ACTC\Core\States\Status\Cancelled;
 use ACTC\Discounts\Discount;
 use ACTC\Discounts\DiscountUser;
-use ACTC\Users\Requests\RegisterStepThreeRequest;
+use ACTC\Users\Notifications\AccountReactivated;
+use ACTC\Users\Requests\StoreCardRequest;
 use ACTC\Users\States\OnboardingStatus\Completed;
 use Illuminate\Http\RedirectResponse;
 
 class Step03Save
 {
-    public function __invoke(RegisterStepThreeRequest $request) // : RedirectResponse
+    public function __invoke(StoreCardRequest $request): RedirectResponse
     {
         $user = auth()->user();
         $user->addPaymentMethod($request->paymentMethodId);
@@ -30,7 +32,7 @@ class Step03Save
                     'discount_id' => $discount->id,
                 ]);
 
-                if ($discount->type === 1 && $discount->weeks) {
+                if (1 === $discount->type && $discount->weeks) {
                     $trialDays = $discount->weeks * 7;
                     $subscription->trialDays($trialDays);
                 } else {
@@ -45,10 +47,19 @@ class Step03Save
 
         $subscription->createAndSendInvoice();
 
+        $isRenewal = false;
+        if (is_a($user->status, Cancelled::class)) {
+            $user->notify(new AccountReactivated());
+            $isRenewal = true;
+        }
+
         // save the user
         $user->onboarding_status->transitionTo(Completed::class);
         $user->status->transitionTo(Active::class);
-        $user->sendEmailVerificationNotification();
+
+        if (!$isRenewal) {
+            $user->sendEmailVerificationNotification();
+        }
 
         // redirect to the dashboard
         return redirect()->route('dashboard');
@@ -62,12 +73,12 @@ class Step03Save
             'id' => $discount->uuid,
         ];
 
-        if ($discount->type === 2) {
+        if (2 === $discount->type) {
             $data['currency'] = 'aud';
             $data['amount_off'] = $discount->value;
         }
 
-        if ($discount->type === 3) {
+        if (3 === $discount->type) {
             $data['percent_off'] = $discount->percent;
         }
 
@@ -78,7 +89,6 @@ class Step03Save
                 return $coupon->id;
             }
         } catch (\Exception $e) {
-
         }
 
         return $user->stripe()->coupons->create($data)->id;

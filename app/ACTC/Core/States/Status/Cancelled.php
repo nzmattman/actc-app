@@ -6,7 +6,7 @@ namespace ACTC\Core\States\Status;
 
 class Cancelled extends StatusState
 {
-    public static $name = 'cancelled';
+    public static string $name = 'cancelled';
 
     public function status(): string
     {

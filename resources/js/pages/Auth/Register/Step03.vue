@@ -1,9 +1,14 @@
 <template>
   <GuestLayout>
-    <Head title="Register: Payment Details" />
-    <AuthLayout heading="Register: Payment Details">
+    <Head :title="title" />
+    <AuthLayout :heading="title">
       <template #text>
-        <Steps current="Payment Details" :step="3" :steps="3" />
+        <Steps
+          current="Payment Details"
+          :step="3"
+          :steps="3"
+          v-if="!cancelled"
+        />
       </template>
 
       <div class="space-y-2">
@@ -85,9 +90,12 @@ import { computed, reactive, ref } from 'vue';
 interface Props {
   intent: string;
   value: number;
+  cancelled?: boolean;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  cancelled: false,
+});
 
 const form = useForm();
 
@@ -99,6 +107,14 @@ const discountText = ref('');
 const formData = reactive({
   paymentMethodId: '',
   discountId: '',
+});
+
+const title = computed(() => {
+  if (props.cancelled) {
+    return 'Re-Activate: Payment Details';
+  }
+
+  return 'Register: Payment Details';
 });
 
 const total = computed<number>(() => {

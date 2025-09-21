@@ -26,14 +26,15 @@ class RouteServiceProvider extends ServiceProvider
 
     public function mapAdminRoutes(): void
     {
-        Route::middleware(['web', 'auth', 'onboarded', 'verified'])
+        Route::middleware(['web', 'auth', 'active', 'onboarded', 'verified'])
             ->group(function () {
                 $routeAggregate = app(RouteAggregate::class);
 
                 foreach ($routeAggregate->getRouteFiles('auth') as $routeFile) {
                     include $routeFile;
                 }
-            });
+            })
+        ;
     }
 
     protected function mapWebRoutes(): void
@@ -45,7 +46,8 @@ class RouteServiceProvider extends ServiceProvider
                 foreach ($routeAggregate->getRouteFiles('web') as $routeFile) {
                     include $routeFile;
                 }
-            });
+            })
+        ;
 
         Route::middleware(['web', 'auth'])->get('logout', [AuthenticatedSessionController::class, 'destroy'])->name('auth.logout');
     }

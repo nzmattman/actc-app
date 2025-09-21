@@ -26,6 +26,10 @@ class CardIndex
                     }
                 }
 
+                usort($methods, function ($a, $b) {
+                    return ($b['default'] ?? false) <=> ($a['default'] ?? false);
+                });
+
                 return $methods;
             }, 'cards'),
         ];

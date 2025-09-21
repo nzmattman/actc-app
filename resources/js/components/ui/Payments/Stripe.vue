@@ -21,25 +21,22 @@
     </div>
   </div>
 
-  <Toast :position="ToastLocation.BOTTOM_RIGHT" :group="ToastLocationGroup.BOTTOM_RIGHT"/>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { useStripe } from '@/composables/useStripe.ts';
+import { onMounted, ref, watch } from 'vue';
+import { useStripe, useToast } from '@/composables';
 import { StripeCardElementChangeEvent } from '@stripe/stripe-js';
 import BlackBlock from '@/components/ui/Blocks/BlackBlock.vue';
 import LoadingSpinner from '@/components/ui/LoadingSpinner.vue';
-import Toast from 'primevue/toast';
-import { useToast } from 'primevue/usetoast';
-import { ToastLocation, ToastLocationGroup, ToastSeverity } from '@/entities';
-
 
 interface Props {
   intent: string;
+  loading?: boolean;
 }
 
 const props = defineProps<Props>();
+
 const paymentEl = ref();
 const cardLast4 = ref();
 const cardExpiry = ref();
@@ -49,23 +46,14 @@ const stripe = useStripe();
 const toast = useToast();
 const emit = defineEmits(['payment']);
 
-const handleToast = (summary: string, detail: string, severity: ToastSeverity) => {
-  toast.add({
-    severity,
-    summary,
-    detail,
-    life: 3000,
-    group: ToastLocationGroup.BOTTOM_RIGHT,
-  })
-}
-
 const saveCard = async () => {
   const { setupIntent, error } = await stripe.confirmSetup();
   isLoading.value = false;
 
   if (error) {
+    console.log('this is the error');
     console.warn(error);
-    handleToast('Sorry, there was an error', error.message, ToastSeverity.ERROR);
+    toast.popError('Sorry, there was an error', error.message);
   } else {
 
     if (setupIntent.payment_method.card.last4) {
@@ -84,8 +72,6 @@ const saveCard = async () => {
   }
 }
 
-
-
 onMounted(async() => {
   const { paymentElement } = await stripe.load(props.intent, '#payment-element');
   paymentEl.value = paymentElement;
@@ -99,8 +85,15 @@ onMounted(async() => {
       }
     }
   );
-
 })
+
+watch(
+  () => props.loading,
+  () => {
+    isLoading.value = props.loading
+  },
+);
+
 </script>
 
 <style>

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use ACTC\Users\Actions\Profile\ProfileCancelled;
 use ACTC\Users\Actions\Register\Step01;
 use ACTC\Users\Actions\Register\Step01Save;
 use ACTC\Users\Actions\Register\Step02;
@@ -27,5 +28,13 @@ Route::prefix('register')
         Route::post('/address-details', Step02Save::class)->name('step-two.save');
         Route::get('/payment-details', Step03::class)->name('step-three');
         Route::post('/payment-details', Step03Save::class)->name('step-three.save');
+    })
+;
+
+Route::middleware(['auth:web'])
+    ->name('profile.')
+    ->prefix('profile')
+    ->group(function () {
+        Route::get('/cancelled', ProfileCancelled::class)->name('cancelled');
     })
 ;

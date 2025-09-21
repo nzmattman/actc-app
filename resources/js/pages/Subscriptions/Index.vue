@@ -90,22 +90,19 @@
         </Deferred>
       </BlockContent>
     </div>
-
-    <ConfirmDialog />
   </AuthenticatedLayout>
 </template>
 
 <script setup lang="ts">
+import { useConfirm } from '@/composables';
 import { Subscription, SubscriptionInvoice } from '@/entities';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Deferred, Head, useForm } from '@inertiajs/vue3';
 import BlockContent from '@ui/Blocks/BlockContent.vue';
-import { ConfirmDialog } from 'primevue';
-import { useConfirm } from 'primevue/useconfirm';
 
 interface Props {
   invoices?: SubscriptionInvoice[];
-  subscription: Subscription;
+  subscription?: Subscription;
 }
 
 defineProps<Props>();
@@ -113,28 +110,8 @@ defineProps<Props>();
 const confirm = useConfirm();
 const form = useForm({});
 
-const confirmAction = async () => {
-  return new Promise((resolve) => {
-    confirm.require({
-      message: `Are you sure you want to proceed?`,
-      header: 'Confirmation',
-      icon: 'pi pi-exclamation-triangle',
-      rejectProps: {
-        label: 'Cancel',
-        severity: 'secondary',
-        outlined: true,
-      },
-      acceptProps: {
-        label: 'Ok',
-      },
-      accept: () => resolve(true),
-      reject: () => resolve(false),
-    });
-  });
-};
-
 const handleConfirm = async () => {
-  const confirmed = await confirmAction();
+  const confirmed = await confirm.confirm();
 
   if (confirmed) {
     try {

@@ -17,11 +17,11 @@
             </span>
           </aside>
 
-          <div>
+          <div v-if="!isCancelled">
             <h1 v-if="title">{{ title }}</h1>
           </div>
 
-          <nav>
+          <nav v-if="!isCancelled">
             <Link href="/" class="has-notification">
               <IconBell />
               <NotificationDot />
@@ -38,7 +38,7 @@
           </div>
         </section>
 
-        <footer class="app__footer">
+        <footer class="app__footer" v-if="!isCancelled">
           <nav>
             <NavItem href="dashboard" title="Home">
               <IconHome />
@@ -53,6 +53,13 @@
         </footer>
       </main>
     </div>
+
+    <Toast
+      :position="ToastLocation.BOTTOM_RIGHT"
+      :group="ToastLocationGroup.BOTTOM_RIGHT"
+    />
+
+    <ConfirmDialog />
   </MasterLayout>
 </template>
 
@@ -61,7 +68,8 @@ import NavItem from '@/components/nav/NavItem.vue';
 import MasterLayout from '@/layouts/MasterLayout.vue';
 
 import Image from '@/components/ui/Image.vue';
-import { Link } from '@inertiajs/vue3';
+import { ToastLocation, ToastLocationGroup } from '@/entities';
+import { Link, usePage } from '@inertiajs/vue3';
 import IconArrowLeft from '@svg/icon-arrow-left.svg?component';
 import IconBell from '@svg/icon-bell.svg?component';
 import IconClub from '@svg/icon-club.svg?component';
@@ -69,6 +77,8 @@ import IconHome from '@svg/icon-home.svg?component';
 import IconUser from '@svg/icon-user.svg?component';
 import IconResult from '@svg/icon-weight.svg?component';
 import NotificationDot from '@ui/NotificationDot.vue';
+import { ConfirmDialog } from 'primevue';
+import Toast from 'primevue/toast';
 import { computed } from 'vue';
 
 interface Props {
@@ -79,12 +89,17 @@ interface Props {
   fullHeight?: boolean;
   backgroundDesktop?: string;
   backgroundMobile?: string;
+  isCancelled?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   fullWidth: false,
   fullHeight: false,
+  isCancelled: false,
 });
+
+const page = usePage().props;
+const notificationCount = page.notifications;
 
 const bodyClassList = computed(() => {
   const classes = [];

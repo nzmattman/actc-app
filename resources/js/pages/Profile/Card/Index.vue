@@ -9,7 +9,9 @@
       <div class="space-y-2">
         <h2 class="heading">My Cards</h2>
         <div>
-          <ButtonStandard> Add a new card </ButtonStandard>
+          <ButtonStandard :href="route('profile.card.create')" as="Link">
+            Add a new card
+          </ButtonStandard>
         </div>
       </div>
 
@@ -80,7 +82,7 @@
 <script setup lang="ts">
 import ButtonStandard from '@/components/ui/ButtonStandard.vue';
 import Grid from '@/components/ui/Grid/Grid.vue';
-import { useApi, useSwal } from '@/composables';
+import { useApi, useConfirm, useToast } from '@/composables';
 import { Card, Size } from '@/entities';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Deferred, Head } from '@inertiajs/vue3';
@@ -92,17 +94,18 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const swal = useSwal();
+const toast = useToast();
+const confirm = useConfirm();
 const api = useApi();
 
 const cardsList = ref();
 
 const markAsDefault = async (card: Card) => {
-  const response = await swal.confirm(
+  const response = await confirm.confirm(
     'Are you sure you want to make this your default card?',
   );
 
-  if (response.isConfirmed) {
+  if (response) {
     card.isLoadingDefault = true;
     try {
       const response = await api.patch(
@@ -115,28 +118,32 @@ const markAsDefault = async (card: Card) => {
         });
         card.default = true;
         card.isLoadingDefault = false;
+        toast.pop(
+          'Success',
+          'Card has been successfully marked as your new default',
+        );
       } else {
-        await swal.alert(
-          'Sorry, there was an error marking this card as the default',
+        toast.popError(
+          'Sorry, there was an error',
+          'Unable to mark this card as default',
         );
         card.isLoadingDefault = false;
       }
     } catch (e) {
       console.warn(e);
-      await swal.alert(
-        'Sorry, there was an error marking this card as the default',
-      );
+
+      toast.popError('Sorry, there was an error', e.message);
       card.isLoadingDefault = false;
     }
   }
 };
 
 const removeCard = async (card: Card) => {
-  const response = await swal.confirm(
+  const response = await confirm.confirm(
     'Are you sure you want to remove this card?',
   );
 
-  if (response.isConfirmed) {
+  if (response) {
     card.isLoadingRemove = true;
     try {
       const response = await api.destroy(
@@ -148,13 +155,17 @@ const removeCard = async (card: Card) => {
           return item.id !== card.id;
         });
         card.isLoadingRemove = false;
+        toast.pop('Success', 'Card has been successfully removed');
       } else {
-        await swal.alert('Sorry, there was an error removing this card');
+        toast.popError(
+          'Sorry, there was an error',
+          'Unable to remove this card',
+        );
         card.isLoadingRemove = false;
       }
     } catch (e) {
       console.warn(e);
-      await swal.alert('Sorry, there was an error removing this card');
+      toast.popError('Sorry, there was an error', e.message);
       card.isLoadingRemove = false;
     }
   }
