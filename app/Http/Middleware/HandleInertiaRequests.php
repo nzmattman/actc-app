@@ -32,7 +32,9 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        $notifications = $request->user()->unreadNotifications?->count();
+        $notifications = auth()->check()
+            ? auth()->user()->unreadNotifications()?->count()
+            : 0;
 
         return [
             ...parent::share($request),
@@ -43,7 +45,7 @@ class HandleInertiaRequests extends Middleware
                 ...(new Ziggy())->toArray(),
                 'location' => $request->url(),
             ],
-            'notifications' => $notifications,
+            'notificationCount' => $notifications,
         ];
     }
 }

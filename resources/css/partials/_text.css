@@ -5,4 +5,8 @@
   &--right {
     text-align: right;
   }
+
+  &--gold {
+    color: var(--gold);
+  }
 }

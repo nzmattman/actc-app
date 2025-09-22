@@ -2,3 +2,8 @@
   font-size: var(--heading-font-size);
   line-height: 1.2;
 }
+
+.sub-heading {
+  font-size: var(--sub-heading-font-size);
+  line-height: 1.2;
+}

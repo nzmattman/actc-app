@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ACTC\Users\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Notification;
 
 class AccountReactivated extends Notification
@@ -28,7 +29,7 @@ class AccountReactivated extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['database'];
+        return ['database', 'broadcast'];
     }
 
     /**
@@ -39,7 +40,18 @@ class AccountReactivated extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'message' => 'Account has been reactivated.',
+            'heading' => 'Account re-activated',
+            'message' => 'Your account has been successfully re-activated.',
         ];
+    }
+
+    public function toBroadcast(object $notifiable): BroadcastMessage
+    {
+        return new BroadcastMessage($this->toArray($notifiable));
+    }
+
+    public function broadcastType(): string
+    {
+        return 'account-reactivated';
     }
 }

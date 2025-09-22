@@ -13,6 +13,7 @@ use ACTC\Users\User;
 use ACTC\Discounts\Providers\DiscountServiceProvider;
 use ACTC\Orders\Providers\OrderServiceProvider;
 use ACTC\Results\Providers\ResultServiceProvider;
+use ACTC\Notifications\Providers\NotificationServiceProvider;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Cashier\Cashier;
 
@@ -24,6 +25,7 @@ class CoreServiceProvider extends ServiceProvider
         Cashier::calculateTaxes();
 
         // register the service providers
+		$this->app->register(NotificationServiceProvider::class);
 		$this->app->register(ResultServiceProvider::class);
 		$this->app->register(OrderServiceProvider::class);
 		$this->app->register(DiscountServiceProvider::class);

@@ -22,9 +22,9 @@
           </div>
 
           <nav v-if="!isCancelled">
-            <Link href="/" class="has-notification">
+            <Link :href="route('notifications.index')" class="has-notification">
               <IconBell />
-              <NotificationDot />
+              <NotificationDot v-if="notificationStore.count" />
             </Link>
             <Link :href="route('profile.index')">
               <IconUser />
@@ -68,8 +68,11 @@ import NavItem from '@/components/nav/NavItem.vue';
 import MasterLayout from '@/layouts/MasterLayout.vue';
 
 import Image from '@/components/ui/Image.vue';
+import { useToast } from '@/composables';
 import { ToastLocation, ToastLocationGroup } from '@/entities';
+import { useNotificationStore } from '@/stores';
 import { Link, usePage } from '@inertiajs/vue3';
+import { useEchoNotification } from '@laravel/echo-vue';
 import IconArrowLeft from '@svg/icon-arrow-left.svg?component';
 import IconBell from '@svg/icon-bell.svg?component';
 import IconClub from '@svg/icon-club.svg?component';
@@ -79,7 +82,7 @@ import IconResult from '@svg/icon-weight.svg?component';
 import NotificationDot from '@ui/NotificationDot.vue';
 import { ConfirmDialog } from 'primevue';
 import Toast from 'primevue/toast';
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 
 interface Props {
   title?: string;
@@ -98,8 +101,26 @@ const props = withDefaults(defineProps<Props>(), {
   isCancelled: false,
 });
 
+const notificationStore = useNotificationStore();
+const toast = useToast();
+
 const page = usePage().props;
-const notificationCount = page.notifications;
+
+interface NotificationInterface {
+  heading: string;
+  message: string;
+  id: string;
+  type: string;
+}
+useEchoNotification<NotificationInterface>(
+  `ACTC.Users.User.${page.auth.user.id}`,
+  (item) => {
+    if (item.type === 'account-reactivated') {
+      toast.pop(item.heading, item.message);
+      notificationStore.count += 1;
+    }
+  },
+);
 
 const bodyClassList = computed(() => {
   const classes = [];
@@ -123,6 +144,10 @@ const bodyInnerClassList = computed(() => {
   }
 
   return classes;
+});
+
+onMounted(() => {
+  notificationStore.count = (page.notificationCount as number) ?? 0;
 });
 </script>
 

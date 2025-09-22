@@ -4,6 +4,7 @@ export * from './clubs';
 export * from './discount';
 export * from './form';
 export * from './modules';
+export * from './notifications';
 export * from './plugins';
 export * from './results';
 export * from './routines';
