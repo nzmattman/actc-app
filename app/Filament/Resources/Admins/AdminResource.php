@@ -60,4 +60,16 @@ class AdminResource extends Resource
             ])
         ;
     }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        // If authenticated user's ID is greater than 1, hide the first record
+        if (auth()->guard('admin')->check() && auth()->guard('admin')->user()->id > 1) {
+            $query->where('id', '!=', 1);
+        }
+
+        return $query;
+    }
 }

@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace ACTC\Admin;
 
 use ACTC\Admin\Observers\AdminObserver;
+use ACTC\Core\States\Status\Active;
+use ACTC\Core\States\Status\StatusState;
 use ACTC\Core\Traits\HasUuid;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasName;
@@ -14,25 +16,28 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Carbon;
 
 #[ObservedBy([AdminObserver::class])]
 /**
- * @property int $id
- * @property string $uuid
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \Illuminate\Support\Carbon|null $email_verified_at
- * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property int $active
- * @property string $first_name
- * @property string $last_name
- * @property string $email
- * @property string $password
- * @property string|null $remember_token
- * @property-read string $name
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
- * @property-read int|null $notifications_count
+ * @property int                                                       $id
+ * @property string                                                    $uuid
+ * @property null|Carbon                                               $created_at
+ * @property null|Carbon                                               $updated_at
+ * @property null|Carbon                                               $email_verified_at
+ * @property null|Carbon                                               $deleted_at
+ * @property int                                                       $active
+ * @property string                                                    $first_name
+ * @property string                                                    $last_name
+ * @property string                                                    $email
+ * @property string                                                    $password
+ * @property null|string                                               $remember_token
+ * @property string                                                    $name
+ * @property DatabaseNotificationCollection<int, DatabaseNotification> $notifications
+ * @property null|int                                                  $notifications_count
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Admin newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Admin newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Admin onlyTrashed()
@@ -52,7 +57,7 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Admin whereUuid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Admin withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Admin withoutTrashed()
- * @property string|null $status
+ * @property null|string $status
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Admin whereStatus($value)
  * @mixin \Eloquent
  */
@@ -64,7 +69,7 @@ class Admin extends Authenticatable implements FilamentUser, HasName, MustVerify
     use SoftDeletes;
 
     protected $fillable = [
-        'active',
+        'status',
         'first_name',
         'last_name',
         'email',
@@ -91,11 +96,21 @@ class Admin extends Authenticatable implements FilamentUser, HasName, MustVerify
         return true;
     }
 
+    public function getAuthPassword()
+    {
+        if (!is_a($this->status, Active::class)) {
+            return null;
+        }
+
+        return $this->password;
+    }
+
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'status' => StatusState::class,
         ];
     }
 

@@ -10,8 +10,12 @@ use ACTC\Core\Traits\HasAddress;
 use ACTC\Core\Traits\HasUuid;
 use ACTC\Users\Observers\UserObserver;
 use ACTC\Users\States\OnboardingStatus\OnboardingStatusState;
+use ACTC\Videos\Video;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\DatabaseNotification;
@@ -19,6 +23,7 @@ use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Laravel\Cashier\Billable;
+use Laravel\Cashier\Subscription;
 use Spatie\ModelStates\HasStates;
 use Spatie\ModelStates\HasStatesContract;
 
@@ -67,19 +72,21 @@ use Spatie\ModelStates\HasStatesContract;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereUuid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User withoutTrashed()
- * @property string|null $stripe_id
- * @property string|null $pm_type
- * @property string|null $pm_last_four
- * @property string|null $trial_ends_at
- * @property-read string $name
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Cashier\Subscription> $subscriptions
- * @property-read int|null $subscriptions_count
+ * @property null|string                   $stripe_id
+ * @property null|string                   $pm_type
+ * @property null|string                   $pm_last_four
+ * @property null|string                   $trial_ends_at
+ * @property string                        $name
+ * @property Collection<int, Subscription> $subscriptions
+ * @property null|int                      $subscriptions_count
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User hasExpiredGenericTrial()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User onGenericTrial()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePmLastFour($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User wherePmType($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereStripeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|User whereTrialEndsAt($value)
+ * @property-read Collection<int, Video> $videos
+ * @property-read int|null $videos_count
  * @mixin \Eloquent
  */
 #[ObservedBy([UserObserver::class])]
@@ -137,6 +144,11 @@ class User extends Authenticatable implements HasStatesContract, MustVerifyEmail
             'postal_code' => $this->address?->postcode,
             'state' => $this->address?->state->name,
         ];
+    }
+
+    public function videos(): Builder|HasMany
+    {
+        return $this->hasMany(Video::class);
     }
 
     /**

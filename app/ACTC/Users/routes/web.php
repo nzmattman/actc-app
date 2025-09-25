@@ -12,7 +12,7 @@ use ACTC\Users\Actions\Register\Step03Save;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('register')
-    ->middleware('guest')
+    ->middleware(['guest', 'redirectIfAdmin'])
     ->name('register.')
     ->group(function () {
         Route::get('/', Step01::class)->name('step-one');
@@ -22,7 +22,7 @@ Route::prefix('register')
 
 Route::prefix('register')
     ->name('register.')
-    ->middleware(['auth:web'])
+    ->middleware(['auth:web', 'redirectIfAdmin'])
     ->group(function () {
         Route::get('/address-details', Step02::class)->name('step-two');
         Route::post('/address-details', Step02Save::class)->name('step-two.save');
@@ -31,7 +31,7 @@ Route::prefix('register')
     })
 ;
 
-Route::middleware(['auth:web'])
+Route::middleware(['auth:web', 'redirectIfAdmin'])
     ->name('profile.')
     ->prefix('profile')
     ->group(function () {

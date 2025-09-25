@@ -14,7 +14,7 @@ class UsersTable
     {
         return $table
             ->columns([
-                IconColumn::make('active')->boolean()->sortable(),
+                IconColumn::make('status')->boolean()->sortable(),
                 TextColumn::make('first_name')->sortable()->searchable(),
                 TextColumn::make('last_name')->sortable()->searchable(),
                 TextColumn::make('email')->sortable()->searchable(),

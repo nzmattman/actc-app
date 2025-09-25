@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 use Inertia\Inertia;
 
-Route::middleware('guest')->get('/', function () {
+Route::middleware(['guest', 'redirectIfAdmin'])->get('/', function () {
     return Inertia::render('Welcome');
 });
 

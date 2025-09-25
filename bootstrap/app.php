@@ -5,6 +5,8 @@ declare(strict_types=1);
 use App\Http\Middleware\Active;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\Onboarded;
+use App\Http\Middleware\RedirectIfAdmin;
+use App\Http\Middleware\RedirectIfUser;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -25,6 +27,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'onboarded' => Onboarded::class,
             'active' => Active::class,
+            'redirectIfAdmin' => RedirectIfAdmin::class,
+            'redirectIfUser' => RedirectIfUser::class,
         ]);
 
         $middleware->validateCsrfTokens(except: [

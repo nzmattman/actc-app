@@ -22,7 +22,6 @@ use Illuminate\Support\Carbon;
  * @property null|string         $name
  * @property null|int            $points
  * @property null|ResultCategory $category
- *
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Result newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Result newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Result onlyTrashed()
@@ -40,7 +39,10 @@ use Illuminate\Support\Carbon;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Result whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Result withTrashed(bool $withTrashed = true)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Result withoutTrashed()
- *
+ * @property string|null $section_slug
+ * @property string|null $division_slug
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Result whereDivisionSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Result whereSectionSlug($value)
  * @mixin \Eloquent
  */
 class Result extends Model

@@ -13,6 +13,7 @@
     "ext-intl": "*",
     "dompdf/dompdf": "^3.1",
     "filament/filament": "*",
+    "filament/spatie-laravel-tags-plugin": "^4.0",
     "google/apiclient": "^2.18",
     "inertiajs/inertia-laravel": "*",
     "laravel/cashier": "^15.7",
@@ -25,6 +26,7 @@
     "spatie/laravel-data": "*",
     "spatie/laravel-model-states": "^2.12",
     "spatie/laravel-sluggable": "^3.7",
+    "spatie/laravel-tags": "^4.10",
     "tightenco/ziggy": "^2.5"
   },
   "require-dev": {

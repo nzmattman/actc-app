@@ -8,6 +8,8 @@ use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Notifications\Notification;
+use Filament\Support\Colors\Color;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
@@ -21,7 +23,18 @@ class AdminsTable
     {
         return $table
             ->columns([
-                IconColumn::make('active')->boolean()->sortable(),
+                IconColumn::make('status')
+                    ->icon(fn (string $state) => match ($state) {
+                        'active' => Heroicon::OutlinedCheckCircle,
+                        'cancelled' => Heroicon::OutlinedXCircle,
+                        default => Heroicon::OutlinedQuestionMarkCircle,
+                    })
+                    ->color(fn (string $state) => match ($state) {
+                        'active' => Color::Green,
+                        'cancelled' => Color::Red,
+                        default => Color::Gray,
+                    })
+                    ->sortable(),
                 TextColumn::make('first_name')->sortable()->searchable(),
                 TextColumn::make('last_name')->sortable()->searchable(),
                 TextColumn::make('email')->sortable()->searchable(),
